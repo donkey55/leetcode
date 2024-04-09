@@ -12,6 +12,8 @@ public class T56 {
     public int[][] merge(int[][] intervals) {
         List<int[]> interList = new ArrayList<>(Arrays.asList(intervals));
         interList.sort((a, b) -> a[0]-b[0]);
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        System.out.println(Arrays.deepToString(intervals));
         int min = interList.getFirst()[0];
         int max = interList.getFirst()[1];
         List<int[]> res = new ArrayList<>();
@@ -30,6 +32,6 @@ public class T56 {
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.deepToString(new T56().merge(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})));
+        System.out.println(Arrays.deepToString(new T56().merge(new int[][]{{4, 3}, {2, 6}, {8, 10}, {15, 18}})));
     }
 }

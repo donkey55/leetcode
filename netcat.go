@@ -8,12 +8,19 @@ import (
 )
 
 func main() {
-	listen, err := net.Dial("tcp", "127.0.0.1:8888")
+	conn, err := net.Dial("tcp", "localhost:8888")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer listen.Close()
-	mustCopy(os.Stdout, listen)
+	done := make(chan struct{})
+	go func() {
+		io.Copy(os.Stdout, conn) // NOTE: ignoring errors
+		log.Println("done")
+		done <- struct{}{} // signal the main goroutine
+	}()
+	mustCopy(conn, os.Stdin)
+	conn.Close()
+	<-done
 }
 
 func mustCopy(dst io.Writer, src io.Reader) {

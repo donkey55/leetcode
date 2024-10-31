@@ -1,6 +1,7 @@
 package lsp;
 
 public class QuickSort {
+    public volatile  int gg;
 
     static void quickSort(int[] arr, int low, int high) {
         if (low < high) {
